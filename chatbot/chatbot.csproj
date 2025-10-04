@@ -61,17 +61,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="chats.json" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="LLamaSharp" Version="0.25.0" />
 		<PackageReference Include="LLamaSharp.Backend.Cpu" Version="0.25.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Page Include="chats.json" />
 	</ItemGroup>
 
 
@@ -93,6 +85,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="chats.json">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
 	  <None Update="modelos de ai\llama-3.2-1b-instruct-q8_0.gguf">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>

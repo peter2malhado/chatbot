@@ -4,9 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace chatbot
+namespace chatbot.Models
 {
-    internal class ChatSession
+    public class ChatMessage
     {
+        public string Role { get; set; } // "user" ou "bot"
+        public string Text { get; set; }
+    }
+
+    public class ChatSession
+    {
+        public string Id { get; set; }       // Ex: "chat1"
+        public string Title { get; set; }    // Ex: "Conversa sobre música"
+        public List<ChatMessage> Messages { get; set; } = new();
     }
 }

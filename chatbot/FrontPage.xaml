@@ -1,54 +1,48 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="chatbot.FrontPage"
-             BackgroundColor="#1E1E2C">
+             BackgroundColor="#1E1E2C"
+             xmlns:local="clr-namespace:chatbot">
 
-    <VerticalStackLayout Spacing="20"
-                         Padding="20"
-                         VerticalOptions="Center"
-                         HorizontalOptions="Center">
+    <VerticalStackLayout Padding="20" Spacing="20">
 
-        <Label Text="🤖 Bem-vindo ao ChatGPT Clone"
+        <!-- Título -->
+        <Label Text="💬 As Minhas Conversas"
                FontSize="28"
                FontAttributes="Bold"
-               TextColor="White"
-               HorizontalOptions="Center" />
+               TextColor="White" />
 
-        <Button Text="🆕 Nova Conversa"
-                FontSize="18"
+        <!-- Botão Nova Conversa -->
+        <Button Text="➕ Nova Conversa"
                 BackgroundColor="#4CAF50"
                 TextColor="White"
+                FontSize="18"
                 Padding="15,10"
                 CornerRadius="12"
-                Clicked="OnStartChatClicked"/>
+                Clicked="OnStartChatClicked" />
 
-        <Label Text="Conversas Anteriores"
-               FontSize="16"
-               TextColor="LightGray"
-               Margin="0,20,0,5"
-               HorizontalOptions="Center" />
+        <!-- Lista de Conversas -->
+        <CollectionView ItemsSource="{Binding Conversations}"
+                        SelectionChanged="OnChatSelected">
 
-        <!-- Lista de conversas -->
-        <CollectionView x:Name="ChatList"
-                        HeightRequest="300"
-                        ItemsSource="{Binding Conversations}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame BackgroundColor="#2A2A3A"
-                           CornerRadius="8"
-                           Padding="10"
-                           Margin="0,5">
-                        <Label Text="{Binding}"
+                    <Frame CornerRadius="12"
+                           Padding="15"
+                           Margin="0,5"
+                           BackgroundColor="#2A2A3D"
+                           HasShadow="True">
+
+                        <Label Text="{Binding Title}"
                                TextColor="White"
-                               FontSize="16">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnChatSelected"/>
-                            </Label.GestureRecognizers>
-                        </Label>
+                               FontSize="18" />
+
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+
         </CollectionView>
 
     </VerticalStackLayout>
+
 </ContentPage>

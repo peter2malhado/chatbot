@@ -1,69 +1,35 @@
-
 using System.Collections.ObjectModel;
+using chatbot.Models;
+
 namespace chatbot
 {
     public partial class FrontPage : ContentPage
     {
+        public ObservableCollection<ChatSession> Conversations { get; set; } = new();
 
-        public ObservableCollection<string> Conversations { get; set; } = new();
         public FrontPage()
         {
             InitializeComponent();
             BindingContext = this;
 
-
-            Conversations.Add("Conversa 1");
-            Conversations.Add("Ajuda C#");
-            Conversations.Add("Ideias de Projeto");
+            Conversations.Add(new ChatSession { Id = "chat1", Title = "Conversa 1" });
+            Conversations.Add(new ChatSession { Id = "chat2", Title = "Ajuda C#" });
+            Conversations.Add(new ChatSession { Id = "chat3", Title = "Ideias de Projeto" });
         }
 
         private void OnStartChatClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new chatpage());
+            Navigation.PushAsync(new chatpage()); // Nova conversa
         }
 
-        private void OnChatSelected(object sender, EventArgs e)
+        private async void OnChatSelected(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is Label label && label.Text is string conversationName)
+            if (e.CurrentSelection.FirstOrDefault() is ChatSession selectedChat)
             {
-                // Abre a conversa correspondente (aqui tu depois vais passar o histórico)
-                Navigation.PushAsync(new chatpage(conversationName));
+                await Navigation.PushAsync(new chatpage(selectedChat.Id));
             }
 
-
-
-
+            ((CollectionView)sender).SelectedItem = null;
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

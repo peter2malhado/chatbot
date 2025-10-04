@@ -1,8 +1,16 @@
-﻿namespace chatbot
+﻿using LLama;
+using chatbot.Models;
+using chatbot.Services;
+
+namespace chatbot
 {
+
     public partial class chatpage : ContentPage
     {
-        public chatpage()
+
+        public chatpage() : this(null) { }
+
+        public chatpage(string chatId)
         {
             InitializeComponent();
             BindingContext = new ChatViewModel();
@@ -15,5 +23,8 @@
                 vm.SendMessageCommand.Execute(null);
             }
         }
+
+      
+
     }
 }
