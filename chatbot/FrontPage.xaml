@@ -1,0 +1,54 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="chatbot.FrontPage"
+             BackgroundColor="#1E1E2C">
+
+    <VerticalStackLayout Spacing="20"
+                         Padding="20"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center">
+
+        <Label Text="🤖 Bem-vindo ao ChatGPT Clone"
+               FontSize="28"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center" />
+
+        <Button Text="🆕 Nova Conversa"
+                FontSize="18"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                Padding="15,10"
+                CornerRadius="12"
+                Clicked="OnStartChatClicked"/>
+
+        <Label Text="Conversas Anteriores"
+               FontSize="16"
+               TextColor="LightGray"
+               Margin="0,20,0,5"
+               HorizontalOptions="Center" />
+
+        <!-- Lista de conversas -->
+        <CollectionView x:Name="ChatList"
+                        HeightRequest="300"
+                        ItemsSource="{Binding Conversations}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="#2A2A3A"
+                           CornerRadius="8"
+                           Padding="10"
+                           Margin="0,5">
+                        <Label Text="{Binding}"
+                               TextColor="White"
+                               FontSize="16">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnChatSelected"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>

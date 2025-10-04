@@ -1,0 +1,19 @@
+﻿namespace chatbot
+{
+    public partial class chatpage : ContentPage
+    {
+        public chatpage()
+        {
+            InitializeComponent();
+            BindingContext = new ChatViewModel();
+        }
+
+        private void MessageEntry_Completed(object sender, EventArgs e)
+        {
+            if (BindingContext is ChatViewModel vm && vm.SendMessageCommand.CanExecute(null))
+            {
+                vm.SendMessageCommand.Execute(null);
+            }
+        }
+    }
+}
