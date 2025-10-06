@@ -73,9 +73,6 @@
 	  <Compile Update="FrontPage.xaml.cs">
 	    <DependentUpon>FrontPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="chatpage.xaml.cs">
-	    <DependentUpon>chatpage.xaml</DependentUpon>
-	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -85,7 +82,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="chats.json">
+	  <None Update="chats2.json">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </None>
 	  <None Update="modelos de ai\llama-3.2-1b-instruct-q8_0.gguf">
