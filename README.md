@@ -1,0 +1,50 @@
+# 🤖 LocalGPT MAUI — ChatGPT Offline no Teu Dispositivo
+
+Uma aplicação moderna construída em **.NET MAUI** que permite conversar com modelos de linguagem **100% offline**, usando **LLamaSharp** e **llama.cpp**. Interface inspirada no ChatGPT oficial, mas totalmente open-source e extensível.
+
+---
+
+## 🚀 Funcionalidades
+
+✅ Interface tipo ChatGPT com suporte a **User / Bot messages**  
+✅ Envio com tecla **Enter**  
+✅ Carregamento de **modelos GGUF locais**  
+✅ Compatível com **Windows / Android / Linux** (através de MAUI)  
+
+---
+
+## 🛠️ Tecnologias
+
+| Tecnologia  | Uso |
+|-------------|---------------------------|
+| .NET MAUI   | Interface cross-platform  |
+| C#          | Lógica principal          |
+| LLamaSharp  | Integração com LLM local |
+| llama.cpp   | Backend de IA            |
+
+---
+
+## 📸 Screenshot
+<img width="1229" height="763" alt="image" src="https://github.com/user-attachments/assets/c1fd562c-a9ab-4721-8afe-d91908b458da" />
+
+
+---
+
+## 📦 Como Correr
+
+```bash
+# Clone o projeto
+git clone https://github.com/teu-user/teu-repo.git
+
+# Navega para a pasta
+cd teu-repo
+
+# Roda o projeto
+dotnet build
+dotnet run
+```
+---
+
+Se me deres os **3 detalhes acima**, finalizo já tudo ao estilo **profissional + gamer + hacker** 😎🔥
+
+![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
