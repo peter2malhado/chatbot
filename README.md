@@ -1,5 +1,5 @@
 
-# 🤖 LocalGPT MAUI — ChatGPT Offline no Teu Dispositivo
+# 🤖 Localllama — ChatGPT Offline no Teu Dispositivo
 
 Uma aplicação moderna construída em **.NET MAUI** que permite conversar com modelos de linguagem **100% offline**, usando **LLamaSharp** e **llama.cpp**. Interface inspirada no ChatGPT oficial, mas totalmente open-source e extensível.
 
