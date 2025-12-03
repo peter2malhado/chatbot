@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +10,39 @@ namespace chatbot.Services
 {
     public static class ChatStorage
     {
-        private static readonly string FilePath =
-            Path.Combine(FileSystem.AppDataDirectory, "chats.json");
+        private static string GetFilePath()
+        {
+            // Tenta usar um local mais acessível para salvar o arquivo JSON
+            try
+            {
+                // Para Windows, usa o diretório LocalApplicationData com o nome do app
+                if (OperatingSystem.IsWindows())
+                {
+                    var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                    var appFolder = Path.Combine(appDataPath, "Chatbot");
+                    
+                    // Cria a pasta se não existir
+                    if (!Directory.Exists(appFolder))
+                    {
+                        Directory.CreateDirectory(appFolder);
+                    }
+                    
+                    return Path.Combine(appFolder, "chats.json");
+                }
+            }
+            catch
+            {
+                // Se falhar, usa o diretório padrão do MAUI
+            }
+            
+            // Fallback para o diretório padrão do MAUI (funciona em todas as plataformas)
+            return Path.Combine(FileSystem.AppDataDirectory, "chats.json");
+        }
+        
+        private static readonly string FilePath = GetFilePath();
+
+        // 📍 Obter o caminho do arquivo JSON (útil para debug)
+        public static string GetChatsFilePath() => FilePath;
 
         // 🚀 Carrega todos os chats
         public static async Task<List<ChatSession>> LoadChatsAsync()
