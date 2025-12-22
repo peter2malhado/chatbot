@@ -1,9 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using chatbot.Models;
+using chatbot.Services;
 using LLama;
 using LLama.Common;
-using chatbot.Models;
-using chatbot.Services;
+using LLama.Native;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 public class ChatViewModel : BindableObject
 {
@@ -30,14 +31,17 @@ public class ChatViewModel : BindableObject
 
     public ChatViewModel(string chatId)
     {
+        NativeLibraryConfig.Instance.WithLibrary("<libllama.so>", "odd");
         _chatId = chatId;
         SendMessageCommand = new Command(async () => await SendMessage());
+
         InitLLama();
         LoadSession();
     }
 
     private void InitLLama()
     {
+
         string modelPath = @"llama-3.2-1b-instruct-q8_0.gguf";
 
         var parameters = new ModelParams(modelPath)
@@ -87,16 +91,16 @@ public class ChatViewModel : BindableObject
         {
             botReply += text;
             updateCount++;
-            
+
             // Limpar prefixos indesejados enquanto está escrevendo
             var cleanedReply = botReply.Replace("bob:", "", StringComparison.OrdinalIgnoreCase)
                                       .Replace("User:", "", StringComparison.OrdinalIgnoreCase)
                                       .Trim();
-            
+
             // Atualizar o texto da mensagem em tempo real
             // A propriedade Text já notifica a UI automaticamente via INotifyPropertyChanged
             botMessage.Text = cleanedReply;
-            
+
             // Fazer scroll a cada 3 chunks para não sobrecarregar a UI
             if (updateCount % 3 == 0)
             {
@@ -108,7 +112,7 @@ public class ChatViewModel : BindableObject
         botReply = botReply.Replace("bob:", "", StringComparison.OrdinalIgnoreCase)
                            .Replace("User:", "", StringComparison.OrdinalIgnoreCase)
                            .Trim();
-        
+
         botMessage.Text = botReply;
 
         // Guardar conversa atualizada

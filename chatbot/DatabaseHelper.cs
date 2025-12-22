@@ -1,6 +1,4 @@
 using Microsoft.Data.Sqlite;
-using System;
-using System.IO;
 
 namespace chatbot.Services
 {

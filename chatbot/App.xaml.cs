@@ -9,6 +9,6 @@
             // Usar NavigationPage para permitir navegação
             MainPage = new NavigationPage(new FrontPage());
         }
-        
+
     }
 }

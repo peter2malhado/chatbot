@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using chatbot.Models;
+﻿using chatbot.Models;
 
 namespace chatbot
 {
@@ -21,14 +19,14 @@ namespace chatbot
             _chatId = chatId;
             _viewModel = new ChatViewModel(_chatId);
             BindingContext = _viewModel;
-            
+
             // Subscrever eventos para scroll automático quando novas mensagens são adicionadas
             _viewModel.Messages.CollectionChanged += (s, e) =>
             {
                 if (e.NewItems != null && e.NewItems.Count > 0)
                 {
                     ScrollToLastMessage();
-                    
+
                     // Também subscrever mudanças de propriedade na última mensagem (para streaming)
                     if (e.NewItems[0] is Message newMessage)
                     {
