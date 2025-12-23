@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using chatbot.Models;
 using Microsoft.Data.Sqlite;
-using chatbot.Models;
 
 namespace chatbot.Services
 {
@@ -146,20 +142,20 @@ namespace chatbot.Services
                 while (idExists && attempt < 10000) // Limite de segurança
                 {
                     newId = $"chat{attempt}";
-                    
+
                     var checkCommand = new SqliteCommand(
                         "SELECT COUNT(*) FROM ChatSessions WHERE Id = @Id",
                         connection);
                     checkCommand.Parameters.AddWithValue("@Id", newId);
-                    
+
                     var count = Convert.ToInt32(checkCommand.ExecuteScalar());
                     idExists = count > 0;
-                    
+
                     if (!idExists)
                     {
                         break;
                     }
-                    
+
                     attempt++;
                 }
 

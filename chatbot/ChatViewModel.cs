@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using chatbot.Models;
-using chatbot.Services;
-#if !ANDROID
 using LLama;
 using LLama.Common;
-#endif
+using chatbot.Models;
+using chatbot.Services;
 
 public class ChatViewModel : BindableObject
 {
@@ -36,29 +33,17 @@ public class ChatViewModel : BindableObject
 
     public ChatViewModel(string chatId)
     {
+        NativeLibraryConfig.Instance.WithLibrary("<libllama.so>", "odd");
         _chatId = chatId;
         SendMessageCommand = new Command(async () => await SendMessage());
-        
-#if !ANDROID
-        try
-        {
-            InitLLama();
-            _isLLamaInitialized = true;
-        }
-        catch
-        {
-            _isLLamaInitialized = false;
-        }
-#else
-        _isLLamaInitialized = false;
-#endif
-        
+        InitLLama();
         LoadSession();
     }
 
 #if !ANDROID
     private void InitLLama()
     {
+
         string modelPath = @"llama-3.2-1b-instruct-q8_0.gguf";
 
         var parameters = new ModelParams(modelPath)
@@ -111,39 +96,37 @@ public class ChatViewModel : BindableObject
         {
             string botReply = "";
 
-            // Atualizar a mensagem em tempo real conforme os chunks chegam
-            int updateCount = 0;
-            await foreach (var text in _session.ChatAsync(
-                new ChatHistory.Message(AuthorRole.User, userInput),
-                _inferenceParams))
-            {
-                botReply += text;
-                updateCount++;
-                
-                // Limpar prefixos indesejados enquanto está escrevendo
-                var cleanedReply = botReply.Replace("bob:", "", StringComparison.OrdinalIgnoreCase)
-                                          .Replace("User:", "", StringComparison.OrdinalIgnoreCase)
-                                          .Trim();
-                
-                // Atualizar o texto da mensagem em tempo real
-                // A propriedade Text já notifica a UI automaticamente via INotifyPropertyChanged
-                botMessage.Text = cleanedReply;
-                
-                // Fazer scroll a cada 3 chunks para não sobrecarregar a UI
-                if (updateCount % 3 == 0)
-                {
-                    await Task.Delay(1); // Pequeno delay para permitir que a UI atualize
-                }
-            }
-
-            // Limpeza final
-            botReply = botReply.Replace("bob:", "", StringComparison.OrdinalIgnoreCase)
-                               .Replace("User:", "", StringComparison.OrdinalIgnoreCase)
-                               .Trim();
+        // Atualizar a mensagem em tempo real conforme os chunks chegam
+        int updateCount = 0;
+        await foreach (var text in _session.ChatAsync(
+            new ChatHistory.Message(AuthorRole.User, userInput),
+            _inferenceParams))
+        {
+            botReply += text;
+            updateCount++;
             
-            botMessage.Text = botReply;
+            // Limpar prefixos indesejados enquanto está escrevendo
+            var cleanedReply = botReply.Replace("bob:", "", StringComparison.OrdinalIgnoreCase)
+                                      .Replace("User:", "", StringComparison.OrdinalIgnoreCase)
+                                      .Trim();
+            
+            // Atualizar o texto da mensagem em tempo real
+            // A propriedade Text já notifica a UI automaticamente via INotifyPropertyChanged
+            botMessage.Text = cleanedReply;
+            
+            // Fazer scroll a cada 3 chunks para não sobrecarregar a UI
+            if (updateCount % 3 == 0)
+            {
+                await Task.Delay(1); // Pequeno delay para permitir que a UI atualize
+            }
         }
-#endif
+
+        // Limpeza final
+        botReply = botReply.Replace("bob:", "", StringComparison.OrdinalIgnoreCase)
+                           .Replace("User:", "", StringComparison.OrdinalIgnoreCase)
+                           .Trim();
+        
+        botMessage.Text = botReply;
 
         // Guardar conversa atualizada
         await SaveSessionAsync();

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using chatbot.Models;
+﻿using chatbot.Models;
 using chatbot.Services;
+using System.Collections.ObjectModel;
 
 namespace chatbot
 {
@@ -30,10 +28,10 @@ namespace chatbot
             try
             {
                 var chats = await ChatStorage.LoadChatsAsync();
-                
+
                 // Ordenar chats: os com mais mensagens primeiro (mais recentes/ativos)
                 var sortedChats = chats.OrderByDescending(c => c.MessageCount).ToList();
-                
+
                 Conversations.Clear();
                 foreach (var chat in sortedChats)
                     Conversations.Add(chat);
@@ -92,10 +90,10 @@ namespace chatbot
                     {
                         await ChatStorage.UpdateChatTitleAsync(chat.Id, newTitle);
                         chat.Title = newTitle;
-                        
+
                         // Atualizar a lista
                         LoadChats();
-                        
+
                         await DisplayAlert("Sucesso", "Nome da conversa atualizado!", "OK");
                     }
                     catch (Exception ex)
@@ -122,10 +120,10 @@ namespace chatbot
                     try
                     {
                         await ChatStorage.DeleteChatAsync(chat.Id);
-                        
+
                         // Remover da lista local
                         Conversations.Remove(chat);
-                        
+
                         await DisplayAlert("Sucesso", "Conversa deletada com sucesso!", "OK");
                     }
                     catch (Exception ex)
